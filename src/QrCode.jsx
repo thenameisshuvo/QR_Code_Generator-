@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaQrcode, FaDownload, FaMoon, FaSun, FaPaintBrush,  } from "react-icons/fa";
+import { FaQrcode, FaDownload, FaMoon, FaSun, FaPaintBrush } from "react-icons/fa";
 
 const QrCode = () => {
   const [inputValue, setInputValue] = useState("");
@@ -16,7 +16,9 @@ const QrCode = () => {
       const radiusParam = borderRadius ? `&qzone=${borderRadius}` : "";
       const styleParam = style === "dotted" ? "&style=dot" : "";
       setCode(
-        `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(inputValue)}&color=${fgColor.replace("#", "")}&bgcolor=${bgColor.replace("#", "")}${radiusParam}${styleParam}`
+        `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(
+          inputValue
+        )}&color=${fgColor.replace("#", "")}&bgcolor=${bgColor.replace("#", "")}${radiusParam}${styleParam}`
       );
     } else {
       setCode("");
@@ -26,9 +28,12 @@ const QrCode = () => {
   const handleDownload = (format) => {
     if (!code) return;
 
-    const downloadUrl = format === "svg" 
-      ? `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(inputValue)}&color=${fgColor.replace("#", "")}&bgcolor=${bgColor.replace("#", "")}&format=svg`
-      : code;
+    const downloadUrl =
+      format === "svg"
+        ? `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(
+            inputValue
+          )}&color=${fgColor.replace("#", "")}&bgcolor=${bgColor.replace("#", "")}&format=svg`
+        : code;
 
     const link = document.createElement("a");
     link.href = downloadUrl;
@@ -52,7 +57,7 @@ const QrCode = () => {
         <input
           type="text"
           placeholder="Enter text or URL"
-          className="w-full px-4 py-3 mt-4 border-none rounded-lg shadow-md focus:ring-2 focus:ring-yellow-400 transition-all duration-500 transform hover:scale-105"
+          className={`w-full px-4 py-3 mt-4 border-none rounded-lg shadow-md focus:ring-2 focus:ring-yellow-400 transition-all duration-500 transform hover:scale-105 ${darkMode ? "bg-gray-700 text-white" : "bg-white text-black"}`}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -70,7 +75,7 @@ const QrCode = () => {
         </div>
 
         {/* Size Selection */}
-        <div className="mt-4">
+        <div className="mt-4 text-black">
           <label>QR Code Size:</label>
           <select value={qrSize} onChange={(e) => setQrSize(e.target.value)} className="ml-2 p-2 border rounded-md">
             <option value="150">150x150</option>
@@ -80,22 +85,8 @@ const QrCode = () => {
           </select>
         </div>
 
-        {/* Border Radius */}
-        <div className="mt-4">
-          <label>Border Radius:</label>
-          <input
-            type="range"
-            min="0"
-            max="20"
-            value={borderRadius}
-            onChange={(e) => setBorderRadius(e.target.value)}
-            className="ml-2"
-          />
-          <span className="ml-2">{borderRadius}</span>
-        </div>
-
         {/* QR Code Style */}
-        <div className="mt-4">
+        <div className="mt-4 text-black">
           <label>QR Code Style:</label>
           <select value={style} onChange={(e) => setStyle(e.target.value)} className="ml-2 p-2 border rounded-md">
             <option value="square">Square</option>
